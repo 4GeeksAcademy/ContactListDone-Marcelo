@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 export const Home = () => {
 
-	
 const [listaContactos, setListaContactos] = useState(null);
 const {store, dispatch} =useGlobalReducer()
 
@@ -25,8 +24,6 @@ const {store, dispatch} =useGlobalReducer()
 
 		  console.log(listaContactos);
       
-		
-
 		} catch (error) {
 			console.error("Hubo un problema con la solicitud:", error);
 		}
@@ -35,7 +32,10 @@ const {store, dispatch} =useGlobalReducer()
 	fetchContacts();
 	}, []);
 
-
+	function addNewContact(id) {
+		console.log(id)
+	} 
+		
 	return (
 		<div className="text-center mt-5">
 			<Link to="/CreateUser">
@@ -43,7 +43,9 @@ const {store, dispatch} =useGlobalReducer()
 				{listaContactos !== null &&
           			listaContactos.map((contact, index) => (
             			<li key={index}>
-              			{contact.name} - {contact.email} - {contact.phone}
+              			{contact.name} - {contact.email} - {contact.phone}  
+						<button onClick={() => addNewContact(contact.id)}>Agregar contacto</button> 
+						<button></button>
            				 </li>
           ))}
 		
