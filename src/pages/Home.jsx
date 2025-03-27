@@ -32,9 +32,31 @@ const {store, dispatch} =useGlobalReducer()
 	fetchContacts();
 	}, []);
 
-	function addNewContact(id) {
-		console.log(id)
-	} 
+
+		const deleteContact = async (id) => { 
+    try {	
+        const response = await fetch(`https://playground.4geeks.com/contact/agendas/camberotje/contacts/${id}`, {
+            method: "DELETE",
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data);
+		setListaContactos(prevContacts => prevContacts.filter(contact => contact.id !== id));
+
+    } catch (error) {
+        console.error("Hubo un problema con la solicitud:", error);
+    }
+};
+
+
+
+
+		
+
 		
 	return (
 		<div className="text-center mt-5">
@@ -44,8 +66,8 @@ const {store, dispatch} =useGlobalReducer()
           			listaContactos.map((contact, index) => (
             			<li key={index}>
               			{contact.name} - {contact.email} - {contact.phone}  
-						<button onClick={() => addNewContact(contact.id)}>Agregar contacto</button> 
-						<button></button>
+						<button onClick={() => deleteContact(contact.id)}>Eliminar contacto</button> 
+						<button>editar contacto</button>
            				 </li>
           ))}
 		
