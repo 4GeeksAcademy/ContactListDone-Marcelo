@@ -1,4 +1,5 @@
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Link } from "react-router-dom";
 
 export const CreateUser = () => {
 
@@ -6,7 +7,10 @@ export const CreateUser = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello create USER</h1>
+
+      <Link to="/">
+              <button className="btn btn-primary">Or get back to contacts</button>
+            </Link>
 
 		</div>
 	);
