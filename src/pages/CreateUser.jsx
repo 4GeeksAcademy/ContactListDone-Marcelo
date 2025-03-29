@@ -1,15 +1,19 @@
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
+
+
 
 export const CreateUser = () => {
 
+  const navigate = useNavigate();
+
   const {store, dispatch} =useGlobalReducer()
 
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [phone, setPhone] = useState(null);
-  const [addres, setAddres] = useState(null);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [addres, setAddres] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault(); 
@@ -17,7 +21,7 @@ export const CreateUser = () => {
       const newContact = { name, email, phone, addres };
 
       try {	
-        const response = await fetch("https://playground.4geeks.com/contact/agendas/camberotje/contacts", {
+        const response = await fetch("https://playground.4geeks.com/contact/agendas/MarceloCambero/contacts", {
           method: "POST",
           headers: {
           "Content-Type": "application/json",
@@ -28,10 +32,12 @@ export const CreateUser = () => {
           if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
           }
-  
+          
           const data = await response.json();
           console.log(data);
           //REDIRECCION SI LO AS ECHO BIEN
+
+          navigate("/");
 
   
       } catch (error) {

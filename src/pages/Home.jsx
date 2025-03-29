@@ -13,7 +13,7 @@ const {store, dispatch} =useGlobalReducer()
 
 	const fetchContacts = async () => {
 		try {	
-		 const response = await fetch('https://playground.4geeks.com/contact/agendas/camberotje');  
+		 const response = await fetch('https://playground.4geeks.com/contact/agendas/MarceloCambero');  
 		 if (!response.ok) {
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
