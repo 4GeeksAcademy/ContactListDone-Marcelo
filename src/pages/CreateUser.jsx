@@ -8,7 +8,7 @@ export const CreateUser = () => {
 
   const navigate = useNavigate();
 
-  const {store, dispatch} =useGlobalReducer()
+  const { store, dispatch } = useGlobalReducer()
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -16,36 +16,36 @@ export const CreateUser = () => {
   const [addres, setAddres] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
-  
-      const newContact = { name, email, phone, addres };
+    e.preventDefault();
 
-      try {	
-        const response = await fetch("https://playground.4geeks.com/contact/agendas/MarceloCambero/contacts", {
-          method: "POST",
-          headers: {
+    const newContact = { name, email, phone, addres };
+
+    try {
+      const response = await fetch("https://playground.4geeks.com/contact/agendas/MarceloCambero/contacts", {
+        method: "POST",
+        headers: {
           "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newContact),
-        });
-  
-          if (!response.ok) {
-              throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          
-          const data = await response.json();
-          console.log(data);
-          //REDIRECCION SI LO AS ECHO BIEN
+        },
+        body: JSON.stringify(newContact),
+      });
 
-          navigate("/");
-
-  
-      } catch (error) {
-          console.error("Hubo un problema con la solicitud:", error);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
+      const data = await response.json();
+      console.log(data);
+      //REDIRECCION SI LO AS ECHO BIEN
+
+      navigate("/");
+
+
+    } catch (error) {
+      console.error("Hubo un problema con la solicitud:", error);
+    }
+
   }
- 
+
   return (
     <div className="text-center mt-5">
       <Link to="/">
