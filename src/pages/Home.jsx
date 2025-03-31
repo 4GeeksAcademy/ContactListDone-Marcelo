@@ -1,12 +1,11 @@
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Card from "../components/Card.jsx"
 
 // https://playground.4geeks.com/contact/agendas/camberotje/contacts 
 
 export const Home = () => {
-	const navigate = useNavigate()
-	const [listaContactos, setListaContactos] = useState(null);
 	const { store, dispatch } = useGlobalReducer()
 
 	useEffect(() => {
@@ -18,50 +17,44 @@ export const Home = () => {
 					throw new Error(`HTTP error! Status: ${response.status}`);
 				}
 				const data = await response.json();
-				console.log(data);
-
-				setListaContactos([...data.contacts]);
-
-				console.log(listaContactos);
+				
+				dispatch({
+					type: "setContacts",
+					payload: data.contacts
+				})
 
 			} catch (error) {
 				console.error("Hubo un problema con la solicitud:", error);
 			}
 
 		};
+
 		fetchContacts();
 	}, []);
 
-	const deleteContact = async (id) => {
-		try {
-			const response = await fetch(`https://playground.4geeks.com/contact/agendas/MarceloCambero/contacts/${id}`, {
-				method: "DELETE",
-			});
-
-			if (!response.ok) {
-				throw new Error(`HTTP error! Status: ${response.status}`);
-			}
-
-			setListaContactos(prevContacts => prevContacts.filter(contact => contact.id !== id));
-
-		} catch (error) {
-			console.error("Hubo un problema con la solicitud:", error);
-		}
-	};
-
 
 	return (
-		<div className="text-center mt-5">
+		<div className="container text-center mt-5">
 			<Link to="/CreateUser">
-				<button className="btn btn-primary">Add New contact</button> </Link>
-			{listaContactos !== null &&
-				listaContactos.map((contact, index) => (
-					<li key={index}>
-						{contact.name} - {contact.email} - {contact.phone}
-						<button onClick={() => deleteContact(contact.id)}>Eliminar contacto</button>
-						<button onClick={() => navigate(`/EditUser/${contact.id}`)}>editar contacto</button>
-					</li>
-				))}
+				<button className="btn btn-success my-5">Add New contact</button> </Link>
+
+			<div className="row">
+				{store.contacts !== null &&
+					store.contacts.map((contact, index) => (
+						<div className="col-12 col-md-6 col-lg-4 col-xxl-3 mb-5" key={index}>
+							<Card
+								contactName={contact.name}
+								contactEmail={contact.email}
+								contactPhone={contact.phone}
+								contactAddress={contact.address}
+								contactId = {contact.id}
+							/>
+						</div>
+
+					))}
+			</div>
+
+
 
 		</div>
 	);
